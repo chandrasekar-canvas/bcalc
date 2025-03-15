@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Betting Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .checkbox-group label {
+            margin-right: 10px;
+        }
+
+
+        .footer {
+    background: linear-gradient(135deg, #333, #111);
+    color: white;
+    padding: 15px 0;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+.social-icon {
+    color: white;
+    font-size: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-icon {
+    color: rgb(91, 12, 237);
+    font-size: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-icon:hover {
+    color: orange;
+    transform: scale(1.2);
+}
+#live-time {
+    font-size: 18px;
+    color: lightgreen;
+    font-weight: bold;
+    margin-top: 5px;
+    animation: blink 1s infinite alternate;
+}
+
+/* Blinking Effect for Time */
+@keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+            <!-- Navbar Toggle Button for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav me-auto"> 
+                    <li class="nav-item"><a class="nav-link" href="index.html" style="color:rgb(0, 174, 255)">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="NumberPick.html" style="color:rgb(0, 17, 255)">Number Pick</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Numbercac.html" style="color:rgb(0, 17, 255)">NumberCalc</a></li>
+                    <li class="nav-item"><a class="nav-link" style="color:orange" href="https://tc9987.com/register?invite_code=800BD3818937">REGISTER To Earn</a></li>
+                </ul>
+            </div>
+    
+            <!-- Profile Icon on Right Side -->
+            <a href="#" class="profile-icon" style="color: #e506f0; font-size: 24px; margin-right: 10px;">
+                <i class="fas fa-user-circle text-danger"></i>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- FontAwesome for Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    
+
+    <div class="container mt-5 text-center" style="border:2px solid rgb(89, 105, 207); border-radius: 10px;">
+        <h2 class="mb-3 p-2 bg-primary text-white rounded">
+            <i class="bi bi-calculator-fill me-2 text-warning"></i>பந்தய கால்குலேட்டர்
+        </h2>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <label class="form-label">Starting Bet (₹):</label>
+                    <div class="input-group">
+                        <span class="input-group-text">INR</span>
+                        <input type="number" id="startingBet" class="form-control form-control-sm" value="1" min="1">
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Multiplier:</label>
+                   
+
+                    <select id="multiplier" class="form-select" onchange="updateBetHeading()">
+                        <option value="2">2x</option>
+                        <option value="3">3x</option>
+                        <option value="4">4x</option>
+                        <option value="5">5x</option>
+                    </select>
+                    
+                </div>
+                <div class="col-12 mt-2">
+                    <label class="form-label">Select Numbers:</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="numbers" value="1"> 1
+                        <input type="checkbox" name="numbers" value="2"> 2
+                        <input type="checkbox" name="numbers" value="3"> 3
+                        <input type="checkbox" name="numbers" value="4"> 4
+                        <input type="checkbox" name="numbers" value="5"> 5
+                        <input type="checkbox" name="numbers" value="6"> 6
+                        <input type="checkbox" name="numbers" value="7"> 7
+                        <input type="checkbox" name="numbers" value="8"> 8
+                    </div>
+                </div>
+                <div class="col-12 mt-3">
+                    <button onclick="calculateBets()" class="btn btn-success w-100">Calculate</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container mt-3" style="overflow-x: auto; max-width: 100%;">
+            <table class="table table-bordered table-striped" style="min-width: 600px;">
+        
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th id="betAmountHeading">Bet Amount (₹)</th>
+
+                        <th>Profit Before Tax (₹)</th>
+                        <th>Tax (₹)</th>
+                        <th>Net Profit (₹)</th>
+                        <th>Total Loss (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="betTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    
+
+    <script>
+
+function updateBetHeading() {
+    let multiplier = document.getElementById('multiplier').value;
+    let heading = document.getElementById('betAmountHeading');
+    heading.innerHTML = `Bet Amount (₹) <br><small class="text-muted">(${multiplier}x Multiplier)</small>`;
+}
+
+
+        function calculateBets() {
+            let baseBet = parseFloat(document.getElementById('startingBet').value);
+            let multiplier = parseInt(document.getElementById('multiplier').value);
+            let selectedNumbers = document.querySelectorAll('input[name="numbers"]:checked');
+            let numSelected = selectedNumbers.length;
+            let levels = 8; // Default 8 levels
+
+            let tableBody = document.getElementById('betTableBody');
+            tableBody.innerHTML = '';
+
+            if (numSelected === 0) {
+                alert("Please select at least one number!");
+                return;
+            }
+
+            let betAmount = Math.ceil(baseBet * numSelected); // Adjusted bet based on selected numbers
+            let cumulativeLoss = 0;
+            let payoutMultiplier = 8.82 / numSelected; // Adjust payout based on number selection
+
+            for (let i = 1; i <= levels; i++) {
+                cumulativeLoss += betAmount;
+
+                let profitBeforeTax = betAmount * payoutMultiplier;
+                let taxAmount = profitBeforeTax * 0.002; // 0.2% tax
+                let netProfit = profitBeforeTax - taxAmount - cumulativeLoss + betAmount;
+
+                let row = `<tr>
+                    <td>${i}</td>
+                    <td>₹${betAmount}</td>
+                    <td>₹${profitBeforeTax.toFixed(2)}</td>
+                    <td>₹${taxAmount.toFixed(2)}</td>
+                    <td>₹${netProfit.toFixed(2)}</td>
+                    <td>₹${cumulativeLoss.toFixed(2)}</td>
+                </tr>`;
+
+                tableBody.innerHTML += row;
+                betAmount = Math.ceil(betAmount * multiplier);
+            }
+        }
+    </script>
+
+
+<footer class="footer mt-4">
+    <div class="container text-center">
+        <p class="mb-1">© <span id="year"></span> <b style="color: orange;">DPSK FAMILY</b>. All Rights Reserved.</p>
+        <div>
+            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p id="live-time" class="time-animation"></p>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function updateTime() {
+        let now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes().toString().padStart(2, '0');
+        let seconds = now.getSeconds().toString().padStart(2, '0');
+        let ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12 || 12; // Convert 24-hour format to 12-hour
+
+        let timeString = `⏰ ${hours}:${minutes}:${seconds} ${ampm}`;
+        document.getElementById("live-time").innerHTML = timeString;
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    setInterval(updateTime, 1000); // Update time every second
+    updateTime(); // Initial call to display time immediately
+</script>
+
+<!-- FontAwesome for Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+
+<!-- <footer class="footer mt-4">
+    <div class="container text-center">
+        <p class="mb-1">© <span id="year"></span> <b style="color: orange;">DPSK FAMILY</b>. All Rights Reserved.</p>
+        <div>
+            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</footer> -->
+
+<!-- Auto-update year in footer -->
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+<!-- FontAwesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<div>
+
+</div>
+
+</body>
+</html>

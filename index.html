@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Betting Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            text-align: center;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+        }
+        /* Color change after level 5 */
+        .level-high { background-color: yellow; }
+        .level-low { background-color: lightgreen; }
+
+        .footer {
+    background: linear-gradient(135deg, #331010, #111);
+    color: white;
+    padding: 10px 0;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+.social-icon {
+    color: white;
+    font-size: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-icon {
+    color: rgb(91, 12, 237);
+    font-size: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.social-icon:hover {
+    color: orange;
+    transform: scale(1.2);
+}
+#live-time {
+    font-size: 18px;
+    color: rgb(35, 2, 248);
+    font-weight: bold;
+    margin-top: 5px;
+    animation: blink 1s infinite alternate;
+}
+
+/* Blinking Effect for Time */
+@keyframes blink {
+    0% { opacity: 0.1; }
+    100% { opacity: 0.9; }
+}
+    </style>
+</head>
+<body>
+
+    
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+            <!-- Navbar Toggle Button for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav me-auto"> 
+                    <li class="nav-item"><a class="nav-link" href="index.html" style="color:rgb(0, 174, 255)">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="NumberPick.html" style="color:rgb(0, 17, 255)">Number Pick</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Numbercac.html" style="color:rgb(0, 17, 255)">NumberCalc</a></li>
+                    <li class="nav-item"><a class="nav-link" style="color:orange" href="https://tc9987.com/register?invite_code=800BD3818937">REGISTER To Earn</a></li>
+                </ul>
+            </div>
+    
+            <!-- Profile Icon on Right Side -->
+            <a href="#" class="profile-icon" style="color: #e506f0; font-size: 24px; margin-right: 10px;">
+                <i class="fas fa-user-circle text-danger"></i>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- FontAwesome for Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <div class="container mt-5 text-center card hover" style="border:2px solid rgb(89, 105, 207)">
+        <h2 class="mb-3 p-2" style="background-color: rgb(89, 105, 207); border-radius: 10px 10px 0px 0px;">
+            <i class="bi bi-calculator-fill me-2 text-success"></i> பந்தய கால்குலேட்டர்
+        </h2>
+
+        <div class="container">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <label class="form-label"><i class="bi bi-currency-rupee me-2 text-warning h6"></i>Starting Bet (₹):</label>
+                            <input type="number" id="startingBet" class="form-control form-control-sm" value="1">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <label class="form-label"><i class="bi bi-asterisk text-primary me-2 h6"></i>Multiplier (1x):</label>
+                            <input type="number" id="multiplier" class="form-control form-control-sm" value="2" step="0.1">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <label class="form-label"><i class="bi bi-bar-chart-steps me-2 h6 text-danger"></i>Bet Levels:</label>
+                            <input type="number" id="levels" class="form-control form-control-sm" value="8">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <label class="form-label"><i class="bi bi-text-wrap me-2 h6 text-success"></i>Bet Type:</label>
+                            <select id="betType" class="form-select form-select-sm">
+                                <option value="smallbig">Small/Big</option>
+                                <option value="number">Number Guessing</option>
+                                <option value="doublecolor">Double Color</option>
+                                <option value="red">Red</option>
+                                <option value="green">Green</option>
+                                <option value="purple">Purple</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button onclick="calculateBets()" class="btn btn-success btn-sm w-100">Calculate</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container mt-3">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Bet Amount (₹)</th>
+                        <th>Profit (₹)</th>
+                        <th>Total Loss (₹)</th>
+                        <th>Net Profit (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="betTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function calculateBets() {
+            let startingBet = parseInt(document.getElementById('startingBet').value);
+            let multiplier = parseFloat(document.getElementById('multiplier').value);
+            let levels = parseInt(document.getElementById('levels').value);
+            let betType = document.getElementById('betType').value;
+    
+            let tableBody = document.getElementById('betTableBody');
+            tableBody.innerHTML = '';
+    
+            let betAmount = startingBet;
+            let cumulativeLoss = 0;
+            let profitMultiplier = 2;
+            let taxRate = 0.02; // 0.2% tax
+    
+            if (betType === "number") profitMultiplier = 8.82;
+            else if (betType === "doublecolor") profitMultiplier = 2.8;
+            else if (betType === "red" || betType === "green") profitMultiplier = 1.96;
+            else if (betType === "purple") profitMultiplier = 4.5;
+    
+            for (let i = 1; i <= levels; i++) {
+                cumulativeLoss += betAmount;
+                let grossWinAmount = betAmount * profitMultiplier;
+                let tax = grossWinAmount * taxRate;
+                let profit = grossWinAmount - tax; // Profit after tax
+                let netProfit = profit - cumulativeLoss; // Net profit calculation
+    
+                let rowClass = i > 5 ? 'level-high' : 'level-low';
+                
+                let row = `<tr class="${rowClass}">
+                    <td>${i}</td>
+                    <td>₹${betAmount}</td>
+                    <td>₹${profit.toFixed(2)}</td>
+                    <td>₹${cumulativeLoss}</td>
+                    <td>₹${netProfit.toFixed(2)}</td>
+                </tr>`;
+    
+                tableBody.innerHTML += row;
+                betAmount = Math.ceil(betAmount * multiplier);
+            }
+        }
+    </script>
+    
+    <footer class="footer mt-4">
+        <div class="container text-center">
+            <p class="mb-1">© <span id="year"></span> <b style="color: orange;">DPSK FAMILY</b>. All Rights Reserved.</p>
+            <div>
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p id="live-time" class="time-animation"></p>
+        </div>
+    </footer>
+    
+    
+    
+    
+    <script>
+        function updateTime() {
+            let now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            let seconds = now.getSeconds().toString().padStart(2, '0');
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+    
+            hours = hours % 12 || 12; // Convert 24-hour format to 12-hour
+    
+            let timeString = `⏰ ${hours}:${minutes}:${seconds} ${ampm}`;
+            document.getElementById("live-time").innerHTML = timeString;
+        }
+    
+        document.getElementById("year").textContent = new Date().getFullYear();
+        setInterval(updateTime, 1000); // Update time every second
+        updateTime(); // Initial call to display time immediately
+    </script>
+    
+    <!-- FontAwesome for Icons -->
+   <!-- Bootstrap JavaScript for Mobile Navbar -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>
